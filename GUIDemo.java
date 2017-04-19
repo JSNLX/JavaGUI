@@ -1,13 +1,16 @@
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.*;
 
 /**
  * Minimal Java Swing application.
  * 
- * @author Nathan Sprague
+ * @author Nathan Sprague and Jason Lux
+ * @version Apr. 17, 2017
  * 
  */
 public class GUIDemo extends JFrame
@@ -15,6 +18,7 @@ public class GUIDemo extends JFrame
     private JPanel panel;
     private JButton biggerButton;
     private JButton smallerButton;
+    private JButton teleportButton;
 
     /**
      * Set up the application.
@@ -34,6 +38,13 @@ public class GUIDemo extends JFrame
         panel.add(biggerButton);
         panel.add(smallerButton);
         setVisible(true);
+	
+	//personal button
+	teleportButton = new JButton("Teleport");
+	teleportButton.addActionListener(new ButtonHandler());
+	panel.add(teleportButton);
+
+	
     }
 
     /**
@@ -49,16 +60,24 @@ public class GUIDemo extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             Dimension size = getSize();
+            Point location = getLocationOnScreen();
 
             if (e.getSource().equals(biggerButton))
             {
                 setSize(size.width + 10, size.height + 10);
             }
-            else
+            
+            if (e.getSource().equals(smallerButton))
             {
                 setSize(size.width - 10, size.height - 10);
             }
-
+		
+            if (e.getSource().equals(teleportButton))
+            {
+                Random num1 = new  Random();
+                Random num2 = new Random();
+                setLocation(num1.nextInt(size.width), num2.nextInt(size.height));
+            }
         }
     }
 
